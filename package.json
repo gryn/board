@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "http-server": "^0.8.5"
   },
   "name": "board",
   "version": "1.0.0",
