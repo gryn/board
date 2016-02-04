@@ -4,7 +4,6 @@
   "name": "board",
   "version": "1.0.0",
   "description": "laying out a boardgame with math",
-  "main": "node_modules/http-server/bin/http-server",
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
