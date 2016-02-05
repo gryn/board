@@ -3,6 +3,14 @@
 <head>
 	<meta charset="utf-8">
 	<style>
+.title {
+	font-size: 5em;
+}
+.copy {
+}
+.start {
+	font-size: 2em;
+}
 
 .node {
 }
@@ -43,6 +51,16 @@
 	font-size: 2em;
 }
 
+.group-1 {
+	fill: #C91947;
+}
+.group-2 {
+	fill: #EDBCFF;
+}
+.group-3 {
+	fill: #4C81D5;
+}
+
 svg {
 	background: wheat;
 }
@@ -70,6 +88,17 @@ var force = d3.layout.force()
 var svg = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height);
+
+var textdrag = d3.behavior.drag().
+	on('drag', textdragmove);
+function textdragmove(d) {
+	var el = d3.select(this);
+	el.attr('transform', (el.attr('transform') || 'translate(foo,bar)').replace(/translate\([^)]*\)/, 'translate('+d3.event.x+','+d3.event.y+')'));
+}
+
+svg.append('text').attr('transform','translate(400,400)').attr('class', 'title').text('Numeri').call(textdrag);
+svg.append('text').attr('transform','translate(400,400)').attr('class', 'copy').text('© Schmidt Spiele').call(textdrag);
+svg.append('text').attr('transform','translate(400,400) rotate(90)').attr('class', 'start').text('START').call(textdrag);
 
 d3.json("board.json", function(error, graph) {
   if (error) throw error;
@@ -101,7 +130,7 @@ var node = svg.selectAll(".node")
 	node
 		.append("circle")
 		.attr("r", function(d) { if(/p$/.test(d.name)) return smallRadius; if(d.group < 0) return smallRadius; return radius; })
-		.style("fill", function(d) { return color(Math.abs(d.group)); });
+		.attr("class", function(d) { return "group-" + Math.abs(d.group); });
 	node
 		.append("text")
 		// .attr("x", "50%")
